@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Attendance Registration</title>
+    <link rel="stylesheet" href="static/main.css">
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container styles */
+        .container {
+            display: flex;
+            flex-direction: row; /* Change to row to arrange elements horizontally */
+            align-items: flex-start; /* Align items to the top */
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 20%; /* Adjust the width as needed */
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            height: 100vh; /* Extend sidebar to the bottom */
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 20px; /* Reduce margin for readability */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        /* Adjusted table width */
+        .main-content .example {
+            background-color: #eee;
+            width: 80%; /* Adjust the width as needed */
+            height: 100px;
+            border: 1px dotted black;
+            overflow-y: scroll; /* Add the ability to scroll */
+        }
+
+        .main-content .example::-webkit-scrollbar {
+            display: none;
+        }
+
+        .main-content .example {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Attendance System</h2>
+            <br>
+            <div class = "bar"></div>
+            <ul>
+                <li><a href="#">Calendar</a></li>
+                <li><a href="#">Announcements</a></li>
+                <li><a href="#">Student Names</a></li>
+            </ul>
+        </div>
+
+
+
+     <!-- Main Content -->
+     <section class="main-content">
+        <h1>Today's Attendace</h1>
+        <div class="example">
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. 
+        Some text to enable scrolling.. </div>
+    </section>
+</div>
+
+<script>
+    function captureFingerprint() {
+        // Simulate fingerprint capture (replace with actual implementation)
+        const capturedFingerprintData = "Fingerprint data captured.";
+
+        // Display the captured fingerprint image
+        const fingerprintImage = document.getElementById("fingerprint-image");
+        fingerprintImage.src = "data:image/png;base64," + capturedFingerprintData;
+
+        // Show the registration form and populate the hidden input field
+        const registrationForm = document.querySelector(".registration-form form");
+        registrationForm.style.display = "block";
+
+        const fingerprintDataField = document.getElementById("fingerprint-data");
+        fingerprintDataField.value = capturedFingerprintData;
+    }
+</script>
+</body>
+</html>
