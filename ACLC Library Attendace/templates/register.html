@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Attendance Registration</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .loading-spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container styles */
+        .container {
+            display: flex;
+            flex-direction: row; /* Change to row to arrange elements horizontally */
+            justify-content: center; /* Center horizontally */
+            align-items: center;
+            min-height: 90vh;
+            margin: 0;
+        }
+
+        /* Registration form styles */
+        .registration-form {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 65%; /* Adjust the maximum width as needed */
+            width: 100%;
+        }
+
+        .registration-form h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .registration-form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        .registration-form input[type="text"],
+        .registration-form input[type="password"] {
+            width: 100%; /* Make inputs full width */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .fingerprint-container {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .fingerprint-preview {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        #capture-button {
+            background-color: #00be30;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Centered submit button */
+        button[type="submit"] {
+            display: block;
+            margin: 0 auto;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+      </div>
+
+    <div class="container">
+        <section class="registration-form">
+            <div class="contaner_head">
+                <h1 style="font-weight: bold;">Library Attendance Registration</h1>
+            </div>
+            
+            <form action="#">
+                <div class="form-group">
+                    <label for="student-id">Student USN:</label>
+                    <input type="text" class="form-control" id="student-id" name="student-id" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="fingerprint-container">
+                    <div class="fingerprint-preview">
+                        <img id="fingerprint-image" src="" alt="Fingerprint Preview">
+                    </div>
+                    Note: This is used for signing in and signing out<br>
+                    <button id="capture-button" class="btn btn-warning" onclick="captureFingerprint()">Capture Fingerprint</button>
+                </div><br>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        window.addEventListener('load', function () {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    loadingOverlay.style.display = 'none';
+  });
+
+  
+        function captureFingerprint() {
+            // Simulate fingerprint capture (replace with actual implementation)
+            const capturedFingerprintData = "Fingerprint data captured.";
+
+            // Display the captured fingerprint image
+            const fingerprintImage = document.getElementById("fingerprint-image");
+            fingerprintImage.src = "data:image/png;base64," + capturedFingerprintData;
+
+            // Show the registration form and populate the hidden input field
+            const registrationForm = document.querySelector(".registration-form form");
+            registrationForm.style.display = "block";
+
+            const fingerprintDataField = document.getElementById("fingerprint-data");
+            fingerprintDataField.value = capturedFingerprintData;
+        }
+    </script>
+</body>
+</html>
