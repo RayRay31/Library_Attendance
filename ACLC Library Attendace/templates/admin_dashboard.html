@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Users</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
 <style>
   body {
     margin: 0;
@@ -115,76 +119,135 @@
     border: 1px solid #ddd;
     border-radius: 5px;
   }
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .loading-spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 </style>
 </head>
 <body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
 
 <div class="topnav">
   <a class="active" href="#home">Dashboard</a>
+  <a href="#students">Students</a>
   <a href="#news">Announcements</a>
-  <a href="#contact">Contact</a>
   <div class="split">
     <a href="#about">Help</a>
   </div>
 </div>
 
-<div class="table-container">
-  <h2>Today's Library Users: <span id="totalUsers">0</span></h2> <!-- Display total users here -->
-  <input type="text" class="search-input" id="searchInput" placeholder="Search by Name">
-  <table id="userTable">
-    <tr>
-      <th>No.</th>
-      <th>USN</th>
-      <th>Name</th>
-      <th>Time In</th>
-      <th>Time Out</th>
-      <th>Purpose</th>
-    </tr>
-  </table>
+<div class="container">
+  <div class="table-container">
+    <h2>Today's Library Users: <span id="totalUsers">0</span></h2> <!-- Display total users here -->
+    <input type="text" class="search-input" id="searchInput" placeholder="Search by Name">
+    <table class="table table-bordered" id="userTable">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>USN</th>
+          <th>Name</th>
+          <th>Fingerprint</th>
+          <th>Time In</th>
+          <th>Time Out</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="table-container">
+    <div class="total-users">Total Users: <span id="totalUsersDay">0</span></div> <!-- Display total users here -->
+    <h2>Library Users by Day</h2>
+    <div class="day-tabs">
+      <div class="day-tab" onclick="showUsers('Day 1')">Day 1</div>
+      <div class="day-tab" onclick="showUsers('Day 2')">Day 2</div>
+      <div class="day-tab" onclick="showUsers('Day 3')">Day 3</div>
+      <div class="day-tab" onclick="showUsers('Day 4')">Day 4</div>
+      <div class="day-tab" onclick="showUsers('Day 5')">Day 5</div>
+      <div class="day-tab" onclick="showUsers('Day 6')">Day 6</div>
+      <div class="day-tab" onclick="showUsers('Day 7')">Day 7</div>
+    </div>
+    <div class="search-bar">
+      <input type="text" class="search-input" id="searchInputDay" placeholder="Search users for the selected day..." oninput="searchUsers()">
+    </div>
+    <table class="table table-bordered" id="userTableDay">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>USN</th>
+          <th>Name</th>
+          <th>Fingerprint</th>
+          <th>Time In</th>
+          <th>Time Out</th>
+          <th>Purpose</th>
+          <th>Day</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="table-container">
+    <h2>Top 20 Users</h2>
+    <table class="table table-bordered" id="topUsersTable">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Sign-In Count</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
 </div>
 
-<div class="table-container">
-  <div class="total-users">Total Users: <span id="totalUsersDay">0</span></div> <!-- Display total users here -->
-  <h2>Library Users by Day</h2>
-  <div class="day-tabs">
-    <div class="day-tab" onclick="showUsers('Day 1')">Day 1</div>
-    <div class="day-tab" onclick="showUsers('Day 2')">Day 2</div>
-    <div class="day-tab" onclick="showUsers('Day 3')">Day 3</div>
-    <div class="day-tab" onclick="showUsers('Day 4')">Day 4</div>
-    <div class="day-tab" onclick="showUsers('Day 5')">Day 5</div>
-    <div class="day-tab" onclick="showUsers('Day 6')">Day 6</div>
-    <div class="day-tab" onclick="showUsers('Day 7')">Day 7</div>
-  </div>
-  <div class="search-bar">
-    <input type="text" class="search-input" id="searchInputDay" placeholder="Search users for the selected day..." oninput="searchUsers()">
-  </div>
-  <table id="userTableDay">
-    <tr>
-      <th>No.</th>
-      <th>USN</th>
-      <th>Name</th>
-      <th>Time In</th>
-      <th>Time Out</th>
-      <th>Purpose</th>
-      <th>Day</th>
-    </tr>
-  </table>
-</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
+    window.addEventListener('load', function () {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    loadingOverlay.style.display = 'none';
+  });
+
+
   // Sample data for users, you can replace this with your actual data
   const userData = [
-    { No: '1', USN: 'USN 1', Name: 'Name 1', 'Time In': 'Time In 1', 'Time Out': 'Time Out 1', Purpose: 'Purpose 1' },
-    { No: '2', USN: 'USN 2', Name: 'Name 2', 'Time In': 'Time In 2', 'Time Out': 'Time Out 2', Purpose: 'Purpose 2' },
-    { No: '3', USN: 'USN 3', Name: 'Name 3', 'Time In': 'Time In 3', 'Time Out': 'Time Out 3', Purpose: 'Purpose 3' },
-    { No: '4', USN: 'USN 4', Name: 'Name 4', 'Time In': 'Time In 4', 'Time Out': 'Time Out 4', Purpose: 'Purpose 4' },
-    { No: '5', USN: 'USN 5', Name: 'Name 5', 'Time In': 'Time In 5', 'Time Out': 'Time Out 5', Purpose: 'Purpose 5' },
-    { No: '6', USN: 'USN 6', Name: 'Name 6', 'Time In': 'Time In 6', 'Time Out': 'Time Out 6', Purpose: 'Purpose 6' },
-    { No: '7', USN: 'USN 7', Name: 'Name 7', 'Time In': 'Time In 7', 'Time Out': 'Time Out 7', Purpose: 'Purpose 7' },
-    { No: '8', USN: 'USN 8', Name: 'Name 8', 'Time In': 'Time In 8', 'Time Out': 'Time Out 8', Purpose: 'Purpose 8' },
-    { No: '9', USN: 'USN 9', Name: 'Name 9', 'Time In': 'Time In 9', 'Time Out': 'Time Out 9', Purpose: 'Purpose 9' },
-    { No: '10', USN: 'USN 10', Name: 'Name 10', 'Time In': 'Time In 10', 'Time Out': 'Time Out 10', Purpose: 'Purpose 10' },
-    // Add more user data here...
+    { No: '1', USN: 'USN 1', Name: 'Name 1', Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 1', 'Time Out': 'Time Out 1', Purpose: 'Purpose 1' },
+    { No: '2', USN: 'USN 2', Name: 'Name 2', Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 2', 'Time Out': 'Time Out 2', Purpose: 'Purpose 2' },
+    { No: '3', USN: 'USN 3', Name: 'Name 3', Fingerprint: 'Fingerprint 1','Time In': 'Time In 3', 'Time Out': 'Time Out 3', Purpose: 'Purpose 3' },
+    { No: '4', USN: 'USN 4', Name: 'Name 4', Fingerprint: 'Fingerprint 1','Time In': 'Time In 4', 'Time Out': 'Time Out 4', Purpose: 'Purpose 4' },
+    { No: '5', USN: 'USN 5', Name: 'Name 5', Fingerprint: 'Fingerprint 1','Time In': 'Time In 5', 'Time Out': 'Time Out 5', Purpose: 'Purpose 5' },
+    { No: '6', USN: 'USN 6', Name: 'Name 6', Fingerprint: 'Fingerprint 1','Time In': 'Time In 6', 'Time Out': 'Time Out 6', Purpose: 'Purpose 6' },
+    { No: '7', USN: 'USN 7', Name: 'Name 7', Fingerprint: 'Fingerprint 1','Time In': 'Time In 7', 'Time Out': 'Time Out 7', Purpose: 'Purpose 7' },
+    { No: '8', USN: 'USN 8', Name: 'Name 8', Fingerprint: 'Fingerprint 1','Time In': 'Time In 8', 'Time Out': 'Time Out 8', Purpose: 'Purpose 8' },
+    { No: '9', USN: 'USN 9', Name: 'Name 9', Fingerprint: 'Fingerprint 1','Time In': 'Time In 9', 'Time Out': 'Time Out 9', Purpose: 'Purpose 9' },
+    { No: '10', USN: 'USN 10', Name: 'Name 10', Fingerprint: 'Fingerprint 1','Time In': 'Time In 10', 'Time Out': 'Time Out 10', Purpose: 'Purpose 10' },
   ];
 
   // Function to populate the table with data
@@ -231,21 +294,20 @@
 <script>
   // Sample data for users, you can replace this with your actual data
   const userData2 = [
-    { No: '1', USN: 'USN 1', Name: 'Name 1', 'Time In': 'Time In 1', 'Time Out': 'Time Out 1', Purpose: 'Purpose 1', Day: 'Day 1' },
-    { No: '2', USN: 'USN 2', Name: 'Name 2', 'Time In': 'Time In 2', 'Time Out': 'Time Out 2', Purpose: 'Purpose 2', Day: 'Day 2' },
-    { No: '3', USN: 'USN 3', Name: 'Name 3', 'Time In': 'Time In 3', 'Time Out': 'Time Out 3', Purpose: 'Purpose 3', Day: 'Day 3' },
-    { No: '4', USN: 'USN 4', Name: 'Name 4', 'Time In': 'Time In 4', 'Time Out': 'Time Out 4', Purpose: 'Purpose 4', Day: 'Day 4' },
-    { No: '5', USN: 'USN 5', Name: 'Name 5', 'Time In': 'Time In 5', 'Time Out': 'Time Out 5', Purpose: 'Purpose 5', Day: 'Day 5' },
-    { No: '6', USN: 'USN 6', Name: 'Name 6', 'Time In': 'Time In 6', 'Time Out': 'Time Out 6', Purpose: 'Purpose 6', Day: 'Day 6' },
-    { No: '7', USN: 'USN 7', Name: 'Name 7', 'Time In': 'Time In 7', 'Time Out': 'Time Out 7', Purpose: 'Purpose 7', Day: 'Day 7' },
-    { No: '8', USN: 'USN 8', Name: 'Name 8', 'Time In': 'Time In 8', 'Time Out': 'Time Out 8', Purpose: 'Purpose 8', Day: 'Day 1' },
-    { No: '9', USN: 'USN 9', Name: 'Name 9', 'Time In': 'Time In 9', 'Time Out': 'Time Out 9', Purpose: 'Purpose 9', Day: 'Day 2' },
-    { No: '10', USN: 'USN 10', Name: 'Name 10', 'Time In': 'Time In 10', 'Time Out': 'Time Out 10', Purpose: 'Purpose 10', Day: 'Day 3' },
-    { No: '11', USN: 'USN 11', Name: 'Name 11', 'Time In': 'Time In 11', 'Time Out': 'Time Out 11', Purpose: 'Purpose 11', Day: 'Day 4' },
-    { No: '12', USN: 'USN 12', Name: 'Name 12', 'Time In': 'Time In 12', 'Time Out': 'Time Out 12', Purpose: 'Purpose 12', Day: 'Day 5' },
-    { No: '13', USN: 'USN 13', Name: 'Name 13', 'Time In': 'Time In 13', 'Time Out': 'Time Out 13', Purpose: 'Purpose 13', Day: 'Day 6' },
-    { No: '14', USN: 'USN 14', Name: 'Name 14', 'Time In': 'Time In 14', 'Time Out': 'Time Out 14', Purpose: 'Purpose 14', Day: 'Day 7' },
-    // Add more user data here...
+    { No: '1', USN: 'USN 1', Name: 'Name 1',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 1', 'Time Out': 'Time Out 1', Purpose: 'Purpose 1', Day: 'Day 1' },
+    { No: '2', USN: 'USN 2', Name: 'Name 2',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 2', 'Time Out': 'Time Out 2', Purpose: 'Purpose 2', Day: 'Day 2' },
+    { No: '3', USN: 'USN 3', Name: 'Name 3',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 3', 'Time Out': 'Time Out 3', Purpose: 'Purpose 3', Day: 'Day 3' },
+    { No: '4', USN: 'USN 4', Name: 'Name 4',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 4', 'Time Out': 'Time Out 4', Purpose: 'Purpose 4', Day: 'Day 4' },
+    { No: '5', USN: 'USN 5', Name: 'Name 5',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 5', 'Time Out': 'Time Out 5', Purpose: 'Purpose 5', Day: 'Day 5' },
+    { No: '6', USN: 'USN 6', Name: 'Name 6',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 6', 'Time Out': 'Time Out 6', Purpose: 'Purpose 6', Day: 'Day 6' },
+    { No: '7', USN: 'USN 7', Name: 'Name 7',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 7', 'Time Out': 'Time Out 7', Purpose: 'Purpose 7', Day: 'Day 7' },
+    { No: '8', USN: 'USN 8', Name: 'Name 8',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 8', 'Time Out': 'Time Out 8', Purpose: 'Purpose 8', Day: 'Day 1' },
+    { No: '9', USN: 'USN 9', Name: 'Name 9',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 9', 'Time Out': 'Time Out 9', Purpose: 'Purpose 9', Day: 'Day 2' },
+    { No: '10', USN: 'USN 10', Name: 'Name 10',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 10', 'Time Out': 'Time Out 10', Purpose: 'Purpose 10', Day: 'Day 3' },
+    { No: '11', USN: 'USN 11', Name: 'Name 11',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 11', 'Time Out': 'Time Out 11', Purpose: 'Purpose 11', Day: 'Day 4' },
+    { No: '12', USN: 'USN 12', Name: 'Name 12',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 12', 'Time Out': 'Time Out 12', Purpose: 'Purpose 12', Day: 'Day 5' },
+    { No: '13', USN: 'USN 13', Name: 'Name 13',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 13', 'Time Out': 'Time Out 13', Purpose: 'Purpose 13', Day: 'Day 6' },
+    { No: '14', USN: 'USN 14', Name: 'Name 14',Fingerprint: 'Fingerprint 1', 'Time In': 'Time In 14', 'Time Out': 'Time Out 14', Purpose: 'Purpose 14', Day: 'Day 7' },
   ];
 
   // Function to populate the table with data for a specific day
@@ -313,10 +375,68 @@
 
     // Update the total users count
     totalUsers.textContent = userCount;
+    searchInput.value = '';
+  }
+
+   // Function to show users for a specific day when a day tab is clicked
+   function showUsers(day) {
+    populateTable(day);
+   }
+
+   function searchUsers() {
+    const searchInput = document.getElementById('searchInputDay');
+    const selectedDay = document.querySelector('.day-tab.active').textContent;
+
+    const table = document.getElementById('userTableDay');
+    let userCount = 0;
+
+    // Clear the table
+    while (table.rows.length > 1) {
+      table.deleteRow(1);
+    }
+    totalUsers.textContent = userCount;
   }
 
   // Initial load for Day 1
   showUsers('Day 1');
+
+
+  // Function to calculate and display the top 20 users
+  function calculateTopUsers() {
+    const topUsersTable = document.getElementById('topUsersTable');
+
+    // Calculate the number of sign-ins for each user
+    const signInCountByUser = {};
+    userData2.forEach(data => {
+      const name = data.Name;
+      signInCountByUser[name] = (signInCountByUser[name] || 0) + 1;
+    });
+
+    // Sort the users by sign-in count in descending order
+    const sortedUsers = Object.keys(signInCountByUser).sort((a, b) => {
+      return signInCountByUser[b] - signInCountByUser[a];
+    });
+
+    // Display the top 20 users
+    for (let i = 0; i < Math.min(20, sortedUsers.length); i++) {
+      const user = sortedUsers[i];
+      const row = document.createElement('tr');
+      const cellNo = document.createElement('td');
+      cellNo.textContent = i + 1;
+      const cellName = document.createElement('td');
+      cellName.textContent = user;
+      const cellSignInCount = document.createElement('td');
+      cellSignInCount.textContent = signInCountByUser[user];
+      row.appendChild(cellNo);
+      row.appendChild(cellName);
+      row.appendChild(cellSignInCount);
+      topUsersTable.appendChild(row);
+    }
+  }
+
+  // Call the calculateTopUsers function to display the top 20 users
+  calculateTopUsers();
+
 </script>
 </body>
 </html>
