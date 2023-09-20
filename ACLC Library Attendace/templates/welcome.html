@@ -3,27 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Sign-In</title>
+    <title>Welcome Students</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
     <style>
         /* Global styles */
-        body {
+        .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .loading-spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 5s linear infinite;
+  }
+
+
+.body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-        }
+}
 
         /* Container styles */
-        .container {
+.container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0; /* Remove margin to cover the entire viewport */
+            text-align: center;
         }
 
         /* Welcome message styles */
-        .welcome-message {
+.welcome-message {
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -32,25 +58,43 @@
             max-width: 400px; /* Adjust the maximum width as needed */
             width: 100%; /* Cover the entire width of the viewport */
             text-align: center;
-        }
+    }
 
-        .welcome-message h1 {
+.welcome-message h1 {
             font-size: 24px;
             margin-bottom: 20px;
-        }
+     }
 
-        .welcome-message p {
+.welcome-message p {
             font-size: 18px;
             margin-bottom: 15px;
         }
+        
+        @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
     </style>
 </head>
+
+
 <body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+      </div>
     <div class="container">
         <div class="welcome-message">
             <h1>Welcome to [Name] to ACLC Library</h1>
-            <p>Please scan your identification to sign in.</p>
+            <p>Hope you enjoy visiting library</p>
         </div>
     </div>
+    <script>
+        // Function to hide the loading overlay when the page is fully loaded
+        window.addEventListener('load', function () {
+          const loadingOverlay = document.getElementById('loadingOverlay');
+          loadingOverlay.style.display = 'none';
+        });
+      </script>
+      
 </body>
 </html>
