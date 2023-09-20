@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Attendance Registration</title>
+    <link rel="stylesheet" href="static/main.css">
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container styles */
+        .container {
+            display: flex;
+            flex-direction: row; /* Change to row to arrange elements horizontally */
+            justify-content: space-between; /* Add this to space elements */
+            align-items: center;
+            min-height: 90vh;
+            margin: 0;
+        }
+
+        /* Registration form styles */
+        .registration-form {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 65%; /* Adjust the maximum width as needed */
+            width: 100%;
+        }
+
+        .registration-form h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .registration-form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        .registration-form input[type="text"],
+        .registration-form input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Align announcement input fields to the right */
+        .announcement-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .fingerprint-container {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .fingerprint-preview {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        #capture-button {
+            background-color: #00be30;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Centered submit button */
+        button[type="submit"] {
+            display: block;
+            margin: 0 auto;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        /* Footer styles */
+        .footer {
+            color: #333;
+            padding: -50px 0;
+            text-align: center;
+            border-top: 1px solid #ccc;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        /* Announcements styles */
+        aside {
+            width: 25%;
+            padding-left: 15px;
+            margin-left: 10px;
+            float: right;
+            font-style: italic;
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="registration-form">
+            <h1>Library Attendance Registration</h1>
+            <form action="#">
+                <label for="student-id">Student USN:</label>
+                <input type="text" id="student-id" name="student-id" required>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <div class="fingerprint-container">
+                    <div class="fingerprint-preview">
+                        <img id="fingerprint-image" src="" alt="Fingerprint Preview">
+                    </div>
+                    Note: This is used for signing in and signing out<br>
+                    <button id="capture-button" class="btn btn-warning" onclick="captureFingerprint()">Capture Fingerprint</button>
+                </div><br>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+
+        <!-- Announcements -->
+        <aside>
+            <p>Announcements</aside>
+    </div>
+
+    <script>
+        function captureFingerprint() {
+            // Simulate fingerprint capture (replace with actual implementation)
+            const capturedFingerprintData = "Fingerprint data captured.";
+
+            // Display the captured fingerprint image
+            const fingerprintImage = document.getElementById("fingerprint-image");
+            fingerprintImage.src = "data:image/png;base64," + capturedFingerprintData;
+
+            // Show the registration form and populate the hidden input field
+            const registrationForm = document.querySelector(".registration-form form");
+            registrationForm.style.display = "block";
+
+            const fingerprintDataField = document.getElementById("fingerprint-data");
+            fingerprintDataField.value = capturedFingerprintData;
+        }
+    </script>
+</body>
+</html>

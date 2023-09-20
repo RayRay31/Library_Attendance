@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Loading spinner styles */
+        .loading-container {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            font-size: 64px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <h1>Please wait...</h1>
+        <p><i class="fa fa-spinner w3-spin loading-spinner"></i></p>
+    </div>
+
+    <script>
+        // Simulate a delay before redirecting to the admin dashboard
+        setTimeout(function () {
+            // Redirect to the admin dashboard page
+            window.location.href = "admin_dashboard.html";
+        }, 3000); // Adjust the delay (in milliseconds) as needed
+    </script>
+</body>
+</html>
